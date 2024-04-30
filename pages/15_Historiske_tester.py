@@ -354,10 +354,13 @@ if access_token == 'Asplan Viak':
 
     st.markdown('---')
 
+st.subheader('Dine tidligere energibrønner er vist i tabellen under')
 st.dataframe(df,use_container_width=True)
 st.markdown('---')
 
 ############ Show map: ########################################################################################################################
+st.subheader('Klikk på en brønn på kartet for å vise detaljer')
+
 map = folium.Map(location=[65, 18], zoom_start=5, tiles='openstreetmap',zoom_control=False)
 
 for i in range(0,len(df)):
@@ -372,9 +375,9 @@ if chosen_project != None:
     chosen_index = df.index[df['Prosjektnavn'] == chosen_project].tolist()
     chosen_index = chosen_index[0]
 
-    st.header('Valgt prosjekt:')
+    #st.header('Valgt prosjekt:')
     st.markdown('---')
-
+    st.subheader('Prosjektdetaljer:')
     c1,c2,c3,c4 = st.columns(4)
     with c1:
         st.metric('Prosjektnavn:', df['Prosjektnavn'].iloc[chosen_index])
@@ -386,7 +389,7 @@ if chosen_project != None:
         st.metric('Oppdragsnummer', df['Oppdragsnummer'].iloc[chosen_index])
 
     st.markdown('---')
-    
+    st.subheader('Lokasjon:')
     c1,c2,c3 = st.columns(3)
     with c1:
         st.metric('Adresse:', df['Adresse'].iloc[chosen_index])
@@ -396,7 +399,7 @@ if chosen_project != None:
         st.metric('Lengdegrad:', df['Lengdegrad'].iloc[chosen_index])
 
     st.markdown('---')
-    
+    st.subheader('Kollektordata:')
     c1,c2,c3 = st.columns(3)
     with c1:
         if df['Kollektorlengde (m)'].iloc[chosen_index] is not None and df['Kollektorlengde (m)'].iloc[chosen_index] == df['Kollektorlengde (m)'].iloc[chosen_index]:
@@ -409,7 +412,7 @@ if chosen_project != None:
         st.metric('Kollektorvæske:', df['Kollektorvæske'].iloc[chosen_index])
     
     st.markdown('---')
-
+    st.subheader('Brønndata:')
     c4,c5,c6 =st.columns(3)
     with c4:
         if df['Brønndiameter (mm)'].iloc[chosen_index] is not None and df['Brønndiameter (mm)'].iloc[chosen_index] == df['Brønndiameter (mm)'].iloc[chosen_index]:
@@ -425,7 +428,7 @@ if chosen_project != None:
         st.metric('Berggrunn:', df['Berggrunn'].iloc[chosen_index])
 
     st.markdown('---')
-    
+    st.subheader('Informasjon om termisk responstest:')
     c1,c2,c3,c4,c5,c6 = st.columns([0.05, 1, 0.05, 0.05, 1, 0.05])
     
     def database_to_array(list_from_database):
@@ -483,7 +486,7 @@ if chosen_project != None:
 
 
     st.markdown('---')
-
+    st.subheader('Resultater fra termisk responstest:')
     c1, c2 = st.columns(2)
     with c1:
         if df['Effektiv varmeledningsevne (W/mK)'].iloc[chosen_index] is not None and df['Effektiv varmeledningsevne (W/mK)'].iloc[chosen_index] == df['Effektiv varmeledningsevne (W/mK)'].iloc[chosen_index]:
@@ -495,6 +498,8 @@ if chosen_project != None:
             st.metric('Termisk borehullsmotstand', f"{df['Termisk borehullsmotstand (mK/W)'].iloc[chosen_index]} mK/W")
         else:
             st.metric('Termisk borehullsmotstand', " - ")
+
+    st.markdown('---')
 
 ##################################################################################################
 
